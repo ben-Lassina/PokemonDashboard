@@ -1,0 +1,165 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-size: 2rem;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #39aea9 0%, #ee1515 100%);
+    color: #fff; /* Change text color for better contrast */
+    width: 100%;
+    padding: 4rem;
+}
+
+.cards {
+    min-height: 85vh;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(12, 1fr);
+    gap: 2rem;
+}
+
+.card {
+    list-style: none;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 1rem;
+    box-shadow: 0 4rem 8rem rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s; /* Add transition for hover effect */
+}
+
+.card:hover {
+    transform: translateY(-10px); /* Raise card on hover */
+    box-shadow: 0 6rem 12rem rgba(0, 0, 0, 0.3);
+}
+
+.card--first {
+    grid-column: 1 / 5;
+    grid-row: 1 / 7;
+    padding: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.card--second {
+    grid-column: 5 / 13;
+    grid-row: 1 / 7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem;
+}
+
+.card--third {
+    grid-row: 7 / 13;
+    grid-column: 2 / 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem;
+}
+
+.card--fourth {
+    grid-column: 5 / 13;
+    grid-row: 7 / 13;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem;
+}
+
+.card--fifth {
+    grid-column: 1 / 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem;
+}
+
+.card--sixth {
+    grid-column: 5 / 13;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem;
+}
+
+.card--first > input {
+    width: 70%;
+    height: 2.5rem;
+    font-size: 2rem;
+    font-family: sans-serif;
+    padding-left: 2rem;
+    border-radius: 0.5rem;
+    border: none; /* Remove border */
+    box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.2);
+}
+
+.card--third > img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 1rem; /* Round image corners */
+}
+
+.card--third > button {
+    width: 15rem;
+    height: 6rem;
+    font-size: 2rem;
+    font-family: sans-serif;
+    border: none;
+    background: #ee1515;
+    color: #eee;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Transition for button */
+}
+
+.card--third > button:hover {
+    background: #ff4747; /* Lighter red on hover */
+}
+
+#js--characters {
+    align-items: center;
+}
+
+@media screen and (max-width: 87.5rem) {
+    .card--second {
+        grid-row: 1 / 7;
+    }
+
+    .card--third {
+        grid-column: 1 / 5;
+    }
+}
+
+@media screen and (max-width: 62.5rem) {
+    body {
+        background: blue;
+    }
+
+    .card--first,
+    .card--second,
+    .card--fourth,
+    .card--fifth,
+    .card--sixth {
+        display: none;
+    }
+
+    .card--third {
+        grid-column: 1 / 13;
+    }
+}
