@@ -73,15 +73,13 @@ inputField.onkeyup = async (event) => {
             console.error("Error fetching age prediction data:", error);
         }
     }
-};
+}
 
-// Fetch TV show data for The Simpsons
 fetch("https://www.tvmaze.com/shows/83/the-simpsons")
     .then(response => response.json())
     .then(data => console.log(data))
     .catch(error => console.error("Error fetching Simpsons data:", error));
 
-// Chart.js configuration for Pokémon stats
 const stats = {
     labels: ["Power", "Speed", "HP", "Attack", "Defense"],
     datasets: [{
@@ -109,7 +107,6 @@ const config = {
 
 const pokemonChart = new Chart(document.getElementById("js--pokemonchart"), config);
 
-// Chart.js configuration for most popular Pokémon
 const searches = {
     labels: ["Charizard", "Gardevoir", "Sylveon", "Lucario", "Gengar"],
     datasets: [{
@@ -132,7 +129,6 @@ const config1 = {
 
 const pokemonSearch = new Chart(document.getElementById("js--evolvechart"), config1);
 
-// Chart.js configuration for top 5 cartoons
 const shows = {
     labels: ["Spongebob Squarepants", "Avatar: The Last Airbender", "Teen Titans", "The Simpsons", "Foster's Home for Imaginary Friends"],
     datasets: [{
