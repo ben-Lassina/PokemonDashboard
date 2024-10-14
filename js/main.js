@@ -1,22 +1,9 @@
 const pokemonImage = document.getElementById("js--pokemon-image");
-let randomNumber = Math.floor(Math.random() * 250 + 1);
-
-// Fetch random Pokémon
-let pokemon = fetch("https://pokeapi.co/api/v2/pokemon/" + randomNumber)
-    .then(response => response.json())
-    .then(realData => {
-        pokemonImage.setAttribute("src", realData.sprites.front_default);
-    });
-
 const catchButton = document.getElementById("js--catch-button");
-const resetButton = document.createElement("button"); // Create a reset button
-resetButton.innerText = "Catch Another Pokémon";
-resetButton.style.display = "none"; // Initially hidden
-resetButton.className = "reset-button"; // Add class for styling
-document.body.appendChild(resetButton); // Add to the body
-
+const resetButton = document.getElementById("js--reset-button"); 
 const pokemonText = document.getElementById("js--pokemon-text");
-let pokemonGamePlayed = false;
+const nameText = document.getElementById("js--name");
+const inputField = document.getElementById("js--input");
 
 const funFacts = [
     "Pikachu is the mascot of Pokémon!",
@@ -41,47 +28,62 @@ const funFacts = [
     "Zubat has over 1,000 variations in its appearance due to its habitat."
 ];
 
-
-catchButton.onclick = function () {
-    if (!pokemonGamePlayed) {
-        let catchNumber = Math.floor(Math.random() * 2);
-        if (catchNumber === 0) {
-            pokemonText.innerText = "Pokemon fled!";
-        } else {
-            pokemonText.innerText = "Pokemon caught! " + funFacts[Math.floor(Math.random() * funFacts.length)];
-            resetButton.style.display = "block"; // Show the reset button
-        }
-        pokemonGamePlayed = true;
+const fetchRandomPokemon = async () => {
+    const randomNumber = Math.floor(Math.random() * 250 + 1);
+    try {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomNumber}`);
+        const realData = await response.json();
+        pokemonImage.setAttribute("src", realData.sprites.front_default);
+        pokemonText.innerText = "A wild Pokémon appeared!"; 
+    } catch (error) {
+        console.error("Error fetching Pokémon data:", error);
+        pokemonText.innerText = "Failed to fetch Pokémon data.";
     }
-}
+};
 
+const handleCatch = () => {
+    const catchNumber = Math.floor(Math.random() * 2);
+    if (catchNumber === 0) {
+        pokemonText.innerText = "Pokémon fled!";
+    } else {
+        const randomFact = funFacts[Math.floor(Math.random() * funFacts.length)];
+        pokemonText.innerText = "Pokémon caught! " + randomFact;
+    }
+};
 
-resetButton.onclick = function () {
-    location.reload(); 
-}
+catchButton.onclick = () => {
+    handleCatch();
+};
 
-const nameText = document.getElementById("js--name");
-const inputField = document.getElementById("js--input");
-inputField.onkeyup = function (event) {
+resetButton.onclick = () => {
+    fetchRandomPokemon();
+};
+
+fetchRandomPokemon();
+
+inputField.onkeyup = async (event) => {
     if (event.keyCode === 13) {
-        let name = inputField.value;
-        // API call to age predictor
-        let age = fetch("https://api.agify.io?name=" + name)
-            .then(response => response.json())
-            .then(echteData => {
-                nameText.innerText = `Predicted Age: ${echteData.age}`;
-                inputField.style.display = "none";
-            });
+        const name = inputField.value;
+        try {
+            const response = await fetch(`https://api.agify.io?name=${name}`);
+            const echteData = await response.json();
+            nameText.innerText = `Predicted Age: ${echteData.age}`;
+            inputField.style.display = "none";
+        } catch (error) {
+            console.error("Error fetching age prediction data:", error);
+        }
     }
-}
+};
 
+// Fetch TV show data for The Simpsons
+fetch("https://www.tvmaze.com/shows/83/the-simpsons")
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error("Error fetching Simpsons data:", error));
 
-let simpsons = fetch("https://www.tvmaze.com/shows/83/the-simpsons")
-    .then(response => response.json());
-
-const labels = ["Power", "Speed", "HP", "Attack", "Defense"];
+// Chart.js configuration for Pokémon stats
 const stats = {
-    labels: labels,
+    labels: ["Power", "Speed", "HP", "Attack", "Defense"],
     datasets: [{
         label: "Pokémon Stats",
         data: [83, 77, 120, 93, 68],
@@ -104,11 +106,12 @@ const config = {
         }
     }
 };
+
 const pokemonChart = new Chart(document.getElementById("js--pokemonchart"), config);
 
-const labels1 = ["Charizard", "Gardevoir", "Sylveon", "Lucario", "Gengar"];
+// Chart.js configuration for most popular Pokémon
 const searches = {
-    labels: labels1,
+    labels: ["Charizard", "Gardevoir", "Sylveon", "Lucario", "Gengar"],
     datasets: [{
         label: "Most Popular Pokémon in 2022",
         data: [240700, 158400, 136200, 113500, 113000],
@@ -126,11 +129,12 @@ const config1 = {
         },
     }
 };
+
 const pokemonSearch = new Chart(document.getElementById("js--evolvechart"), config1);
 
-const labels2 = ["Spongebob Squarepants", "Avatar: The Last Airbender", "Teen Titans", "The Simpsons", "Foster's Home for Imaginary Friends"];
+// Chart.js configuration for top 5 cartoons
 const shows = {
-    labels: labels2,
+    labels: ["Spongebob Squarepants", "Avatar: The Last Airbender", "Teen Titans", "The Simpsons", "Foster's Home for Imaginary Friends"],
     datasets: [{
         label: "Top 5 Cartoons",
         data: [13, 3, 5, 34, 6],
@@ -153,4 +157,5 @@ const config2 = {
         }
     }
 };
+
 const tvChart = new Chart(document.getElementById("js--tvchart"), config2);
